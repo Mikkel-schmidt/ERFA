@@ -97,9 +97,9 @@ def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) 
         chosen_sections_indexes.append(str(section_index))
             
     # Useful diagnostic information
-    st.write(f"Selected {len(chosen_sections)} document:")
+    st.write(f"Fra {len(chosen_sections)} kilde:")
     #st.write("\n".join(chosen_sections))
-    st.write(df.iloc[chosen_sections_indexes])
+    st.write(df['Kilde'].iloc[chosen_sections_indexes])
         
     return chosen_sections, chosen_sections_len
 
@@ -142,7 +142,7 @@ prompt = st.text_input('Indtast spørgsmål til ERFA-bladene', )
 if prompt:
     c = st.container()
     response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
-    c.write(response)
+    c.header(response)
 
 
 
