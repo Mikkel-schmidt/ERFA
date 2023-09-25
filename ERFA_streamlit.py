@@ -11,10 +11,12 @@ st.title('Spørge Jørgen')
 
 openai.api_key = st.secrets["apikey"]
 
+if 'df' not in st.session_state:
+    df = pd.read_csv('df.csv')
+    st.session_state['key'] = df
+
 with open('document_embeddings.pkl', 'rb') as fp:
     document_embeddings = pickle.load(fp)
-
-df = pd.read_csv('df.csv')
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
 COMPLETIONS_MODEL = "gpt-3.5-turbo"
@@ -38,7 +40,7 @@ def compute_doc_embeddings(df: pd.DataFrame) -> dict[tuple[str, str], list[float
         idx: get_embedding(r.content) for idx, r in df.iterrows()
     }
 
-document_embeddings = compute_doc_embeddings(df)
+#document_embeddings = compute_doc_embeddings(df)
 
 ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
