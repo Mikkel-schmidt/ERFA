@@ -14,6 +14,9 @@ with open('document_embeddings.pkl', 'rb') as fp:
 
 df = pd.read_csv('df.csv')
 
+EMBEDDING_MODEL = "text-embedding-ada-002"
+COMPLETIONS_MODEL = "gpt-3.5-turbo"
+
 ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
 def get_embedding(text: str, model: str=EMBEDDING_MODEL) -> list[float]:
