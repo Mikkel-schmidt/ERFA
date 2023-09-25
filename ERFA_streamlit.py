@@ -3,10 +3,16 @@ import pandas as pd
 import numpy as np
 import os
 import pickle
+import tiktoken
 
 import openai
 
 openai.api_key = "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"
+
+with open('document_embeddings.pkl', 'rb') as fp:
+    document_embeddings = pickle.load(fp)
+
+df = pd.read_csv('df.csv')
 
 ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
@@ -43,10 +49,72 @@ separator_len = len(encoding.encode(SEPARATOR))
 
 f"Context separator contains {separator_len} tokens"
 
+def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) -> str:
+    """
+    Fetch relevant 
+    """
+    most_relevant_document_sections = order_by_similarity(question, context_embeddings)
+    
+    chosen_sections = []
+    chosen_sections_len = 0
+    chosen_sections_indexes = []
+     
+    for _, section_index in most_relevant_document_sections:
+        # Add contexts until we run out of space.        
+        document_section = df.loc[section_index]
+        
+        chosen_sections_len += document_section.tokens + separator_len
+        if chosen_sections_len > MAX_SECTION_LEN:
+            break
+            
+        chosen_sections.append(SEPARATOR + document_section.content.replace("\n", " "))
+        chosen_sections_indexes.append(str(section_index))
+            
+    # Useful diagnostic information
+    print(f"Selected {len(chosen_sections)} document sections:")
+    print("\n".join(chosen_sections_indexes))
+        
+    return chosen_sections, chosen_sections_len
 
-with open('document_embeddings.pkl', 'rb') as fp:
-    document_embeddings = pickle.load(fp)
+def answer_with_gpt_4(
+    query: str,
+    df: pd.DataFrame,
+    document_embeddings: dict[(str, str), np.array],
+    show_prompt: bool = False
+) -> str:
+    messages = [
+        {"role" : "system", "content":"Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. Hvis du ikke kan svare på spørgsmålet skal du svare 'Svaret er ikke i ERFA bladene, håndbogen eller Sikkerhedsstyrelsens guider.'"}
+    ]
+    prompt, section_lenght = construct_prompt(
+        query,
+        document_embeddings,
+        df
+    )
+    if show_prompt:
+        print(prompt)
 
-df = pd.read_csv('df.csv')
+    context= ""
+    for article in prompt:
+        context = context + article 
+
+    context = context + '\n\n --- \n\n + ' + query
+
+    messages.append({"role" : "user", "content":context})
+    response = openai.ChatCompletion.create(
+        model=COMPLETIONS_MODEL,
+        temperature=0.0,
+        max_tokens=2000,
+        messages=messages
+        )
+
+    return '\n' + response['choices'][0]['message']['content'], section_lenght
+
+
+
+prompt = "Hvad koster nye vinduer?"
+response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
+print(response)
+
+
 
 st.write(df)
