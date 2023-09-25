@@ -133,8 +133,7 @@ def answer_with_gpt_4(
 
     return '\n' + response['choices'][0]['message']['content'], section_lenght
 
-
-
+prompt = st.text_input('Indtast Spørgsmål', )
 prompt = "Hvad koster nye vinduer?"
 response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
 print(response)
