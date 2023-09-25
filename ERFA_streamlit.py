@@ -138,7 +138,7 @@ def answer_with_gpt_4(
 
     return '\n' + response['choices'][0]['message']['content'], section_lenght
 
-prompt = st.text_input('Indtast spørgsmål til ERFA-bladene', )
+prompt = st.text_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
 if prompt:
     c = st.container()
     response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
