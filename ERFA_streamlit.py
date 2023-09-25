@@ -73,7 +73,7 @@ ENCODING = "gpt2"  # encoding for text-davinci-003
 encoding = tiktoken.get_encoding(ENCODING)
 separator_len = len(encoding.encode(SEPARATOR))
 
-f"Context separator contains {separator_len} tokens"
+#f"Context separator contains {separator_len} tokens"
 
 def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) -> str:
     """
@@ -135,10 +135,10 @@ def answer_with_gpt_4(
 
     return '\n' + response['choices'][0]['message']['content'], section_lenght
 
-prompt = st.text_input('Indtast Spørgsmål', )
+prompt = st.text_input('Indtast spørgsmål til ERFA-bladene', )
 if prompt:
     response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
-st.write(response)
+    st.write(response)
 
 
 
