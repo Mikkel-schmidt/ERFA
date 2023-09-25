@@ -97,8 +97,8 @@ def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) 
         chosen_sections_indexes.append(str(section_index))
             
     # Useful diagnostic information
-    print(f"Selected {len(chosen_sections)} document sections:")
-    print("\n".join(chosen_sections_indexes))
+    st.write(f"Selected {len(chosen_sections)} document sections:")
+    st.write("\n".join(chosen_sections_indexes))
         
     return chosen_sections, chosen_sections_len
 
@@ -125,7 +125,7 @@ def answer_with_gpt_4(
         context = context + article 
         st.write('hej')
 
-    context = context + '\n\n --- \n\n + ' + query + st.write('hejsa')
+    context = context + '\n\n --- \n\n + ' + query
 
     messages.append({"role" : "user", "content":context})
     response = openai.ChatCompletion.create(
