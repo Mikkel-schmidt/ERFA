@@ -99,7 +99,7 @@ def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) 
     # Useful diagnostic information
     st.write(f"Fra {len(chosen_sections)} kilder:")
     #st.write("\n".join(chosen_sections))
-    st.write(df['Kilde'].iloc[chosen_sections_indexes].values())
+    st.write(df['Kilde'].iloc[chosen_sections_indexes].values)
         
     return chosen_sections, chosen_sections_len
 
