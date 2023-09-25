@@ -97,7 +97,7 @@ def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) 
         chosen_sections_indexes.append(str(section_index))
             
     # Useful diagnostic information
-    st.write(f"Fra {len(chosen_sections)} kilder:")
+    st.write(f"Vigtigste {len(chosen_sections)} kilder:")
     #st.write("\n".join(chosen_sections))
     st.write(df['Kilde'].iloc[chosen_sections_indexes].values)
         
