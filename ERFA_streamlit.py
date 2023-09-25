@@ -98,7 +98,7 @@ def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) 
             
     # Useful diagnostic information
     st.write(f"Selected {len(chosen_sections)} document sections:")
-    st.write("\n".join(chosen_sections_indexes))
+    st.write("\n".join(chosen_sections))
         
     return chosen_sections, chosen_sections_len
 
