@@ -118,12 +118,12 @@ def answer_with_gpt_4(
     )
     if show_prompt:
         print(prompt)
-        st.write('halløj')
+
 
     context= ""
     for article in prompt:
         context = context + article 
-        st.write('hej')
+
 
     context = context + '\n\n --- \n\n + ' + query
 
