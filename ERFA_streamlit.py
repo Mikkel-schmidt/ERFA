@@ -7,7 +7,7 @@ import tiktoken
 
 import openai
 
-openai.api_key = "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"
+openai.api_key = st.secrets["apikey"]
 
 with open('document_embeddings.pkl', 'rb') as fp:
     document_embeddings = pickle.load(fp)
