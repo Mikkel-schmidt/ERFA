@@ -144,8 +144,8 @@ if prompt:
     response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
     c.subheader(response)
 
-st.write('Find kilderne her:')
-st.link_button('Kílder', 'https://github.com/Mikkel-schmidt/ERFA/tree/main/Docs')
+
+    st.link_button('Kilder', 'https://github.com/Mikkel-schmidt/ERFA/tree/main/Docs')
 
 
 
