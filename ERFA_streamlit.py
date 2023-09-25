@@ -7,6 +7,8 @@ import tiktoken
 
 import openai
 
+st.title('Spørge Jørgen')
+
 openai.api_key = st.secrets["apikey"]
 
 with open('document_embeddings.pkl', 'rb') as fp:
@@ -134,10 +136,10 @@ def answer_with_gpt_4(
     return '\n' + response['choices'][0]['message']['content'], section_lenght
 
 prompt = st.text_input('Indtast Spørgsmål', )
-prompt = "Hvad koster nye vinduer?"
-response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
-print(response)
+if prompt:
+    response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
+st.write(response)
 
 
 
-st.write(df)
+#st.write(df)
