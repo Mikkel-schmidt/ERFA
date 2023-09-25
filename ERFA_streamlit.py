@@ -142,7 +142,7 @@ prompt = st.text_input('Indtast spørgsmål til ERFA-bladene', )
 if prompt:
     c = st.container()
     response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
-    c.header(response)
+    c.subheader(response)
 
 
 
