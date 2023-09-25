@@ -75,8 +75,6 @@ ENCODING = "gpt2"  # encoding for text-davinci-003
 encoding = tiktoken.get_encoding(ENCODING)
 separator_len = len(encoding.encode(SEPARATOR))
 
-#f"Context separator contains {separator_len} tokens"
-
 def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) -> str:
     """
     Fetch relevant 
@@ -120,12 +118,14 @@ def answer_with_gpt_4(
     )
     if show_prompt:
         print(prompt)
+        st.write('halløj')
 
     context= ""
     for article in prompt:
         context = context + article 
+        st.write('hej')
 
-    context = context + '\n\n --- \n\n + ' + query
+    context = context + '\n\n --- \n\n + ' + query + st.write('hejsa')
 
     messages.append({"role" : "user", "content":context})
     response = openai.ChatCompletion.create(
