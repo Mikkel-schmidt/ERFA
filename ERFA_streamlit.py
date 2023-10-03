@@ -23,7 +23,7 @@ COMPLETIONS_MODEL = "gpt-3.5-turbo"
 
 ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
-def get_embedding(text: str, model: str=EMBEDDING_MODEL) -> list[float]:
+def get_embedding(text: str, model: str="text-embedding-ada-002") -> list[float]:
     result = openai.Embedding.create(
       model=model,
       input=text
@@ -130,7 +130,7 @@ def answer_with_gpt_4(
 
     messages.append({"role" : "user", "content":context})
     response = openai.ChatCompletion.create(
-        model=COMPLETIONS_MODEL,
+        model="gpt-3.5-turbo",
         temperature=0.0,
         max_tokens=2000,
         messages=messages
