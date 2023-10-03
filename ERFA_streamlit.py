@@ -12,7 +12,7 @@ st.title('Spørge Jørgen')
 openai.api_key = st.secrets["apikey"]
 
 if 'df' not in st.session_state:
-    df = pd.read_csv('df.csv')
+    df = pd.read_csv('df_enc.csv')
     st.session_state['key'] = df
 
 with open('document_embeddings.pkl', 'rb') as fp:
