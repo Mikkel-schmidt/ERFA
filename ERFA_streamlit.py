@@ -7,7 +7,7 @@ import tiktoken
 
 import openai
 
-st.title('Spørge Jørgen')
+st.title('FagBotten')
 
 openai.api_key = st.secrets["apikey"]
 
