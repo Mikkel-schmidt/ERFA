@@ -102,7 +102,7 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
     """
     Fetch relevant 
     """
-    most_relevant_document_sections = order_by_similarity(question+previous_questions, context_embeddings)
+    most_relevant_document_sections = order_by_similarity(question+str(previous_questions), context_embeddings)
     
     chosen_sections = []
     chosen_sections_len = 0
