@@ -126,7 +126,7 @@ def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) 
         
     return chosen_sections, chosen_sections_len
 
-def get_response(instructions, previous_questions_and_answers, new_question):
+def get_response(instructions, previous_questions_and_answers, new_question, df, document_embeddings):
     """Get a response from ChatCompletion
 
     Args:
