@@ -175,9 +175,10 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
 INSTRUCTIONS = """Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. 
 Hvis du ikke kan svare på spørgsmålet skal du svare 'Svaret er ikke i ERFA bladene, håndbogen eller Sikkerhedsstyrelsens guider.'"""
 
-try: previous_questions_and_answers
-except NameError: previous_questions_and_answers = []
 
+if 'previous' not in st.session_state:
+    previous_questions_and_answers = []
+    st.session_state['previous'] = previous_questions_and_answers
 
 
 new_question = st.text_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
@@ -186,12 +187,12 @@ if new_question:
     errors = get_moderation(new_question)
     if errors:
         st.write(errors)
-    response, sections_tokens = get_response(INSTRUCTIONS, previous_questions_and_answers, new_question, df, document_embeddings)
+    response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.previous, new_question, df, document_embeddings)
     c.write(response)
 
-    previous_questions_and_answers.append((new_question, response))
+    st.session_state.previous.append((new_question, response))
 
-st.write(previous_questions_and_answers)
+st.write(st.session_state.previous)
 
 # ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
