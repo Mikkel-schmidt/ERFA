@@ -193,7 +193,7 @@ if new_question:
 
     st.session_state.previous.append((new_question, response))
 
-st.write(st.session_state.previous)
+#st.write(st.session_state.previous)
 
 # ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
