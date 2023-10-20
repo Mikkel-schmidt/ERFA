@@ -189,7 +189,7 @@ if new_question:
     response, sections_tokens = get_response(INSTRUCTIONS, previous_questions_and_answers, new_question, df, document_embeddings)
     c.write(response)
 
-previous_questions_and_answers.append((new_question, response))
+    previous_questions_and_answers.append((new_question, response))
 
 # ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
