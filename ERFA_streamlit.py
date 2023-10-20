@@ -142,7 +142,7 @@ prompt = st.text_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelse
 if prompt:
     c = st.container()
     response, sections_tokens = answer_with_gpt_4(prompt, df, document_embeddings)
-    c.subheader(response)
+    c.write(response)
 
 
     st.link_button('Kilder', 'https://github.com/Mikkel-schmidt/ERFA/tree/main/Docs')
