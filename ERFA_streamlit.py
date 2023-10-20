@@ -98,11 +98,11 @@ ENCODING = "gpt2"  # encoding for text-davinci-003
 encoding = tiktoken.get_encoding(ENCODING)
 separator_len = len(encoding.encode(SEPARATOR))
 
-def construct_prompt(question: str, context_embeddings: dict, df: pd.DataFrame) -> str:
+def construct_prompt(question: str, previous_questions, context_embeddings: dict, df: pd.DataFrame) -> str:
     """
     Fetch relevant 
     """
-    most_relevant_document_sections = order_by_similarity(question, context_embeddings)
+    most_relevant_document_sections = order_by_similarity(question+previous_questions, context_embeddings)
     
     chosen_sections = []
     chosen_sections_len = 0
@@ -143,6 +143,7 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
     ]
     prompt, section_lenght = construct_prompt(
         new_question,
+        st.session_state.previous,
         document_embeddings,
         df
     )
