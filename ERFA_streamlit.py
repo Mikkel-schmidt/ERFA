@@ -175,8 +175,8 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
 INSTRUCTIONS = """Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. 
 Hvis du ikke kan svare på spørgsmålet skal du svare 'Svaret er ikke i ERFA bladene, håndbogen eller Sikkerhedsstyrelsens guider.'"""
 
-
-previous_questions_and_answers = []
+try: previous_questions_and_answers
+except NameError: previous_questions_and_answers = []
 
 
 
