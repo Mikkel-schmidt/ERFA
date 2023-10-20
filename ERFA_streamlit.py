@@ -191,6 +191,8 @@ if new_question:
 
     previous_questions_and_answers.append((new_question, response))
 
+st.write(previous_questions_and_answers)
+
 # ## This code was written by OpenAI: https://github.com/openai/openai-cookbook/blob/main/examples/Question_answering_using_embeddings.ipynb
 
 # def get_embedding(text: str, model: str="text-embedding-ada-002") -> list[float]:
