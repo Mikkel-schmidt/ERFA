@@ -131,7 +131,7 @@ def answer_with_gpt_4(
     messages.append({"role" : "user", "content":context})
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        temperature=0.0,
+        temperature=0.5,
         max_tokens=2000,
         messages=messages
         )
