@@ -26,7 +26,7 @@ MAX_TOKENS = 1500
 FREQUENCY_PENALTY = 0
 PRESENCE_PENALTY = 0.6
 # limits how many questions we include in the prompt
-MAX_CONTEXT_QUESTIONS = 3
+MAX_CONTEXT_QUESTIONS = 5
 
 
 
