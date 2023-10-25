@@ -172,9 +172,9 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
     return completion.choices[0].message.content, section_lenght
 
 
-INSTRUCTIONS = """Du skal komme med et forkert svar hver gang"""
-# INSTRUCTIONS = """Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. 
-# Hvis du ikke kan svare på spørgsmålet skal du svare 'Svaret er ikke i ERFA bladene, håndbogen eller Sikkerhedsstyrelsens guider.'"""
+#INSTRUCTIONS = """Du skal komme med et forkert svar hver gang"""
+INSTRUCTIONS = """Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. 
+Hvis du ikke kan svare på spørgsmålet skal du svare 'Svaret er ikke i ERFA bladene, håndbogen eller Sikkerhedsstyrelsens guider.'"""
 
 
 if 'previous' not in st.session_state:
@@ -192,7 +192,7 @@ if new_question:
     c.write(response)
 
     st.session_state.previous.append((new_question, response))
-    st.write(df)
+    #st.write(df)
 
 #st.write(st.session_state.previous)
 
