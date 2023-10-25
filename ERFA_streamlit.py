@@ -192,6 +192,7 @@ if new_question:
     c.write(response)
 
     st.session_state.previous.append((new_question, response))
+    st.write(df)
 
 #st.write(st.session_state.previous)
 
