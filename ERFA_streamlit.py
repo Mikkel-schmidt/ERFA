@@ -21,7 +21,7 @@ with open('document_embeddings.pkl', 'rb') as fp:
 EMBEDDING_MODEL = "text-embedding-ada-002"
 COMPLETIONS_MODEL = "gpt-3.5-turbo"
 
-TEMPERATURE = 0.1
+TEMPERATURE = 1
 MAX_TOKENS = 1500
 FREQUENCY_PENALTY = 0
 PRESENCE_PENALTY = 0.6
