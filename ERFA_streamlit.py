@@ -193,6 +193,7 @@ if prompt:
 
     st.session_state.previous.append((prompt, response))
     #st.write(df)
+st.write('Stil spørgsmål i søgefeltet i bunden')
 url = "https://forms.office.com/e/dtxKLNNWx8"
 st.write("Du kan komme med feedback [her](%s)" % url)
 
