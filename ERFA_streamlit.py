@@ -182,16 +182,16 @@ if 'previous' not in st.session_state:
     st.session_state['previous'] = previous_questions_and_answers
 
 
-new_question = st.text_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
-if new_question:
+prompt = st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
+if prompt:
     c = st.container()
-    errors = get_moderation(new_question)
+    errors = get_moderation(prompt)
     if errors:
         st.write(errors)
-    response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.previous, new_question, df, document_embeddings)
+    response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.previous, prompt, df, document_embeddings)
     c.write(response)
 
-    st.session_state.previous.append((new_question, response))
+    st.session_state.previous.append((prompt, response))
     #st.write(df)
 url = "https://forms.office.com/e/dtxKLNNWx8"
 st.write("Du kan komme med feedback [her](%s)" % url)
