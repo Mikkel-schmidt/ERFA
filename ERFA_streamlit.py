@@ -193,3 +193,6 @@ if new_question:
 
     st.session_state.previous.append((new_question, response))
     #st.write(df)
+url = "https://forms.office.com/e/dtxKLNNWx8"
+st.write("Du kan komme med feedback [her](%s)" % url)
+
