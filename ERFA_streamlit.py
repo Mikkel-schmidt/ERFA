@@ -187,6 +187,7 @@ if 'previous' not in st.session_state:
 prompt = st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
 if prompt:
     c = st.container()
+    c.write(prompt)
     errors = get_moderation(prompt)
     if errors:
         st.write(errors)
