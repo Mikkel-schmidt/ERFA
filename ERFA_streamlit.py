@@ -4,7 +4,7 @@ import numpy as np
 import os
 import pickle
 import tiktoken
-from streamlit_extras.customize_running import center_running
+#from streamlit_extras.customize_running import center_running
 
 import openai
 
@@ -29,7 +29,7 @@ PRESENCE_PENALTY = 0.6
 # limits how many questions we include in the prompt
 MAX_CONTEXT_QUESTIONS = 3
 
-center_running()
+#center_running()
 
 
 def get_moderation(question):
