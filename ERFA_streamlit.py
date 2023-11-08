@@ -248,7 +248,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
         lines.append(line)  # Append the line to the list
 
     all_lines = '\n'.join(lines)  # Join all the lines into a single string
-    c.chat_message("assistant").write(msg.content + '\n' + all_lines)#"\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
+    c.chat_message("assistant").write(msg.content + '   \n ' + all_lines)#"\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
     
 
 
