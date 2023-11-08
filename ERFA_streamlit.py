@@ -8,7 +8,7 @@ import tiktoken
 import datetime
 from trubrics.integrations.streamlit import FeedbackCollector
 from streamlit_extras.customize_running import center_running
-center_running()
+
 
 import openai
 
@@ -16,7 +16,8 @@ openai.api_key = st.secrets["apikey"]
 
 st.set_page_config(
     page_title="FagBotten",
-    page_icon="🌍",)
+    page_icon="🌍")
+center_running()
 
 if 'df' not in st.session_state:
     df = pd.read_csv('df_enc.csv')
