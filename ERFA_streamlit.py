@@ -158,7 +158,7 @@ def get_response(new_question, df, document_embeddings):
     for article in prompt:
         context = context + article 
 
-
+    st.session_state.messages.append({ "role": "system", "content": INSTRUCTIONS })
 
     # messages.append({"role" : "user", "content":context})
     # # add the previous questions and answers
@@ -212,7 +212,7 @@ if "messages" not in st.session_state:
 for msg in st.session_state.messages:
     c.chat_message(msg["role"]).write(msg["content"])
 
-st.session_state.messages.append({ "role": "system", "content": INSTRUCTIONS })
+
 
 if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen'):
      
