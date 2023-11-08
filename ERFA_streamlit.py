@@ -207,7 +207,7 @@ url = "https://forms.office.com/e/dtxKLNNWx8"
 st.write("Du kan komme med feedback [her](%s)" % url)
 c = st.container()
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "ai", "content": "Stil mig gerne et spørgsmål?"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "Stil mig gerne et spørgsmål?"}]
 
 for msg in st.session_state.messages:
     c.chat_message(msg["role"]).write(msg["content"])
@@ -218,7 +218,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
      
     openai.api_key = st.secrets["apikey"]
     st.session_state.messages.append({"role": "user", "content": prompt})
-    c.chat_message("human").write(prompt)
+    c.chat_message("user").write(prompt)
     errors = get_moderation(prompt)
     if errors:
         c.write(errors)
