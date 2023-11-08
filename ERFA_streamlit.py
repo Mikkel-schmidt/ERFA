@@ -13,7 +13,7 @@ import openai
 openai.api_key = st.secrets["apikey"]
 
 if 'df' not in st.session_state:
-    df = pd.read_csv('df_enc.csv')
+    df = pd.read_csv('df_enc.csv').style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])})
     st.session_state['key'] = df
 
 with open('document_embeddings.pkl', 'rb') as fp:
@@ -126,7 +126,7 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
     # Useful diagnostic information
     st.write(f"Vigtigste {len(chosen_sections)} kilder:")
     #st.write("\n".join(chosen_sections))df_styled = df.head().style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])})
-    st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].values)
+    st.write(df[['url']].iloc[chosen_sections_indexes].values)
         
     return chosen_sections, chosen_sections_len
 
