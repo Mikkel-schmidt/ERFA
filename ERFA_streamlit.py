@@ -6,6 +6,7 @@ from trubrics import Trubrics
 import pickle
 import tiktoken
 import datetime
+import uuid
 from trubrics.integrations.streamlit import FeedbackCollector
 from streamlit_extras.customize_running import center_running
 
