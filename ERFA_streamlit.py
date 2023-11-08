@@ -162,7 +162,7 @@ def get_response(new_question, df, document_embeddings):
 
     completion = openai.ChatCompletion.create(
         model=COMPLETIONS_MODEL,
-        messages=[{ "role": "system", "content": INSTRUCTIONS }] + st.session_state.messages,
+        messages=[{ "role": "system", "content": INSTRUCTIONS }] + [{ "role": "system", "content": context}] + st.session_state.messages,
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
         top_p=TOP_P,
@@ -209,7 +209,7 @@ url = "https://forms.office.com/e/dtxKLNNWx8"
 st.write("Du kan komme med feedback [her](%s)" % url)
 c = st.container()
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "Stil mig gerne et spørgsmål?"}]
+    st.session_state["messages"] = [{"role": "assistant", "content": "Stil mig gerne et spørgsmål"}]
 
 for msg in st.session_state.messages:
     c.chat_message(msg["role"]).write(msg["content"])
