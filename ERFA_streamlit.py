@@ -200,6 +200,9 @@ Du kan kun svare ud fra den kontekst du er blevet tilført igennem beskederne fr
 Svar så godt på spørgsmålet du kan, men hvis du ikke kan svare på spørgsmålet ordentligt, men mangler mere information så spørg efter det. Tror du der kunne være et andet spørgsmål så foreslå om det hander om det istedet.
 Hvis du ikke kan svare så forklar hvad du mangler information omkring. Hvis du ikke forstår spørgsmålet i konteksten så forklar det. """
  
+if "session_id" not in st.session_state:
+    st.session_state.session_id = uuid.uuid4()
+
 if "logged_prompt" not in st.session_state:
     st.session_state.logged_prompt = None
 if "feedback_key" not in st.session_state:
@@ -260,6 +263,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
         config_model={"model": COMPLETIONS_MODEL},
         prompt=prompt,
         generation=msg.content,
+        session_id=st.session_state.session_id,
     )
 
     ct = str(datetime.datetime.now())
