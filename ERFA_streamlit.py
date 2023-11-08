@@ -124,7 +124,7 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
     # Useful diagnostic information
     st.write(f"Vigtigste {len(chosen_sections)} kilder:")
     #st.write("\n".join(chosen_sections))
-    st.write(df['Kilde'].iloc[chosen_sections_indexes].values)
+    st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].values)
         
     return chosen_sections, chosen_sections_len
 
