@@ -239,7 +239,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     st.session_state.messages.append(msg)
     c.chat_message("assistant").write(msg.content)
 
-    ct = datetime.datetime.now()
+    ct = str(datetime.datetime.now())
     questions = open("prompts.txt", "a")
     questions.write(ct + ': ' + prompt + " \n")
     questions.close()
@@ -252,10 +252,10 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     conv.write(ct + ': ' + prompt + '; ' + msg.content + " \n")
     conv.close()
     
-user_feedback = collector.st_feedback(
-    component="default",
-    feedback_type="thumbs",
-    open_feedback_label="[Optional] Provide additional feedback",
-    model=COMPLETIONS_MODEL,
-    prompt_id=None,  # checkout collector.log_prompt() to log your user prompts
-)
+    user_feedback = collector.st_feedback(
+        component="default",
+        feedback_type="thumbs",
+        open_feedback_label="[Optional] Provide additional feedback",
+        model=COMPLETIONS_MODEL,
+        prompt_id=None,  # checkout collector.log_prompt() to log your user prompts
+    )
