@@ -19,15 +19,7 @@ if 'df' not in st.session_state:
 with open('document_embeddings.pkl', 'rb') as fp:
     document_embeddings = pickle.load(fp)
 
-EMBEDDING_MODEL = "text-embedding-ada-002"
-COMPLETIONS_MODEL = "gpt-4-1106-preview"
 
-TEMPERATURE = 1
-MAX_TOKENS = 1500
-FREQUENCY_PENALTY = 0
-PRESENCE_PENALTY = 0.6
-# limits how many questions we include in the prompt
-MAX_CONTEXT_QUESTIONS = 3
 
 
 def make_clickable(val, kilde):
@@ -179,6 +171,15 @@ def get_response(new_question, df, document_embeddings):
     )
     return completion.choices[0].message, section_lenght
 
+EMBEDDING_MODEL = "text-embedding-ada-002"
+COMPLETIONS_MODEL = "gpt-4-1106-preview"
+
+TEMPERATURE = 0.1
+MAX_TOKENS = 1500
+FREQUENCY_PENALTY = 0
+PRESENCE_PENALTY = 0.6
+# limits how many questions we include in the prompt
+MAX_CONTEXT_QUESTIONS = 3
 
 #INSTRUCTIONS = """Du skal komme med et forkert svar hver gang"""
 INSTRUCTIONS = """Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. 
