@@ -102,6 +102,7 @@ streamlit-card==0.0.61
 streamlit-embedcode==0.1.2
 streamlit-extras==0.3.5
 streamlit-faker==0.0.3
+streamlit-feedback==0.1.2
 streamlit-image-coordinates==0.1.6
 streamlit-keyup==0.2.0
 streamlit-toggle-switch==1.0.2
