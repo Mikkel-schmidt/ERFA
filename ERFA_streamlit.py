@@ -165,7 +165,7 @@ def get_response(new_question, df, document_embeddings):
         messages=[{ "role": "system", "content": INSTRUCTIONS }] + st.session_state.messages,
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
-        top_p=1,
+        top_p=0,
         frequency_penalty=FREQUENCY_PENALTY,
         presence_penalty=PRESENCE_PENALTY,
     )
