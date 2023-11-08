@@ -170,7 +170,7 @@ def get_response(new_question, df, document_embeddings):
 
     completion = openai.ChatCompletion.create(
         model=COMPLETIONS_MODEL,
-        messages=st.session_state.messages,
+        messages=st.session_state.messages + ({ "role": "system", "content": INSTRUCTIONS }),
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
         top_p=1,
