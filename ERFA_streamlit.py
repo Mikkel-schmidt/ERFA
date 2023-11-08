@@ -31,7 +31,7 @@ MAX_CONTEXT_QUESTIONS = 3
 
 
 def make_clickable(val, kilde):
-    return f'<a target="_blank" href="{val}#page={page_number}">{kilde}</a>'
+    return f'<a target="_blank" href="{val}">{kilde}</a>'
 
 
 
