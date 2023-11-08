@@ -128,8 +128,8 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
     #st.write("\n".join(chosen_sections))df_styled = df.head().style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])})
     kilder = df[['Kilde', 'url']].iloc[chosen_sections_indexes]
     st.write(kilder)
-    st.write(kilder.shape)
-    for i in kilder.shape[0]:
+    st.write(kilder.shape[0])
+    for i in range(kilder.shape[0]):
         url = df.iloc[i]['url']
         print(url)
     st.write("Du kan komme med feedback [her](%s)" % url)
