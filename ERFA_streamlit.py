@@ -165,7 +165,7 @@ def get_response(new_question, df, document_embeddings):
         messages=[{ "role": "system", "content": INSTRUCTIONS }] + st.session_state.messages,
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
-        top_p=0,
+        top_p=TOP_P,
         frequency_penalty=FREQUENCY_PENALTY,
         presence_penalty=PRESENCE_PENALTY,
     )
@@ -175,6 +175,7 @@ EMBEDDING_MODEL = "text-embedding-ada-002"
 COMPLETIONS_MODEL = "gpt-4-1106-preview"
 
 TEMPERATURE = 0.1
+TOP_P = 0
 MAX_TOKENS = 1500
 FREQUENCY_PENALTY = 0
 PRESENCE_PENALTY = 0.6
