@@ -264,7 +264,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
         config_model={"model": COMPLETIONS_MODEL},
         prompt=prompt,
         generation=msg.content,
-        session_id=st.session_state.session_id,
+        session_id=str(st.session_state.session_id),
     )
 
     ct = str(datetime.datetime.now())
