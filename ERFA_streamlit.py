@@ -281,7 +281,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     conv.close()
 
     user_feedback = collector.st_feedback(
-        component="FagBotten feedback",
+        component="FagBotten Feedback",
         feedback_type="faces",
         open_feedback_label="[Optional] Provide additional feedback",
         model=st.session_state.logged_prompt.config_model.model,
