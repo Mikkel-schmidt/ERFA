@@ -209,20 +209,21 @@ if 'previous' not in st.session_state:
 st.title("💬 FagBotten")
 url = "https://forms.office.com/e/dtxKLNNWx8"
 st.write("Du kan komme med feedback [her](%s)" % url)
+c = st.container()
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Stil mig gerne et spørgsmål?"}]
 
 for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+    c.chat_message(msg["role"]).write(msg["content"])
 
 if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen'):
      
     openai.api_key = st.secrets["apikey"]
     st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
+    c.chat_message("user").write(prompt)
     response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.messages, prompt, df, document_embeddings)
     #st.write(response)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
-    st.chat_message("assistant").write(msg)
+    c.chat_message("assistant").write(msg)
 
