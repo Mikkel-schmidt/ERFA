@@ -243,7 +243,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     lines = []  # Create an empty list to store the strings
     for i in range(kilder.shape[0]):
         url = kilder.iloc[i]['url']
-        line = "\n [" + str(kilder.iloc[i]['Kilde']) + f"]({url})"
+        line = "[" + str(kilder.iloc[i]['Kilde']) + f"]({url}) \n"
         lines.append(line)  # Append the line to the list
 
     all_lines = ''.join(lines)  # Join all the lines into a single string
