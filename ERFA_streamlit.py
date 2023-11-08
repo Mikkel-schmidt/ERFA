@@ -20,7 +20,7 @@ with open('document_embeddings.pkl', 'rb') as fp:
     document_embeddings = pickle.load(fp)
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
-COMPLETIONS_MODEL = "gpt-3.5-turbo"
+COMPLETIONS_MODEL = "gpt-4-1106-preview"
 
 TEMPERATURE = 1
 MAX_TOKENS = 1500
