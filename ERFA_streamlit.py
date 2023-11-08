@@ -201,6 +201,8 @@ prompt = st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelse
 # st.write("Du kan komme med feedback [her](%s)" % url)
 
 st.title("💬 FagBotten") 
+url = "https://forms.office.com/e/dtxKLNNWx8"
+st.write("Du kan komme med feedback [her](%s)" % url)
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Stil mig gerne et spørgsmål?"}]
 
@@ -216,5 +218,4 @@ if prompt := st.chat_input():
     msg = response.choices[0].message
     st.session_state.messages.append(msg)
     st.chat_message("assistant").write(msg.content)
-url = "https://forms.office.com/e/dtxKLNNWx8"
-st.write("Du kan komme med feedback [her](%s)" % url)
+
