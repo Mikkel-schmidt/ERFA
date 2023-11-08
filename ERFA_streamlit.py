@@ -126,7 +126,12 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
     # Useful diagnostic information
     st.write(f"Vigtigste {len(chosen_sections)} kilder:")
     #st.write("\n".join(chosen_sections))df_styled = df.head().style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])})
-    st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])}))
+    kilder = df[['Kilde', 'url']].iloc[chosen_sections_indexes]
+    for i in kilder.shape[0]:
+        url = df.iloc[i]['url']
+        print(url)
+    st.write("Du kan komme med feedback [her](%s)" % url)
+    #st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])}))
         
     return chosen_sections, chosen_sections_len
 
