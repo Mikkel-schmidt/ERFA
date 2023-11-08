@@ -240,11 +240,16 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     response, kilder = get_response(prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
-    urls = []
+    lines = []  # Create an empty list to store the strings
     for i in range(kilder.shape[0]):
-        url = kilder.iloc[i]['url'] 
-        urls = urls.append("\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % url)
-    c.chat_message("assistant").write(msg.content + urls)
+        url = kilder.iloc[i]['url']
+        line = "\n [" + str(kilder.iloc[i]['Kilde']) + f"]({url})"
+        lines.append(line)  # Append the line to the list
+
+    all_lines = ''.join(lines)  # Join all the lines into a single string
+    c.chat_message("assistant").write(msg.content + all_linesvs)#"\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
+    
+
 
     st.session_state.logged_prompt = collector.log_prompt(
         config_model={"model": COMPLETIONS_MODEL},
