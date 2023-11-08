@@ -106,7 +106,7 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
     """
     Fetch relevant 
     """
-    most_relevant_document_sections = order_by_similarity(question+str(previous_questions), context_embeddings)
+    most_relevant_document_sections = order_by_similarity(question, context_embeddings)
     
     chosen_sections = []
     chosen_sections_len = 0
@@ -134,7 +134,7 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
         
     return chosen_sections, chosen_sections_len
 
-def get_response(instructions, previous_questions_and_answers, new_question, df, document_embeddings):
+def get_response(new_question, df, document_embeddings):
     """Get a response from ChatCompletion
 
     Args:
@@ -146,12 +146,10 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
         The response text
     """
     # build the messages
-    messages = [
-        { "role": "system", "content": instructions },
-    ]
+    
     prompt, section_lenght = construct_prompt(
         new_question,
-        st.session_state.previous,
+        st.session_state.messages,
         document_embeddings,
         df
     )
@@ -160,17 +158,19 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
     for article in prompt:
         context = context + article 
 
-    messages.append({"role" : "user", "content":context})
-    # add the previous questions and answers
-    for question, answer in previous_questions_and_answers[-MAX_CONTEXT_QUESTIONS:]:
-        messages.append({ "role": "user", "content": question })
-        messages.append({ "role": "assistant", "content": answer })
-    # add the new question
-    messages.append({ "role": "user", "content": new_question })
+
+
+    # messages.append({"role" : "user", "content":context})
+    # # add the previous questions and answers
+    # for question, answer in previous_questions_and_answers[-MAX_CONTEXT_QUESTIONS:]:
+    #     messages.append({ "role": "user", "content": question })
+    #     messages.append({ "role": "assistant", "content": answer })
+    # # add the new question
+    # messages.append({ "role": "user", "content": new_question })
 
     completion = openai.ChatCompletion.create(
         model=COMPLETIONS_MODEL,
-        messages=messages,
+        messages=st.session_state.messages,
         temperature=TEMPERATURE,
         max_tokens=MAX_TOKENS,
         top_p=1,
@@ -184,10 +184,6 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
 INSTRUCTIONS = """Du er en rådgiver chatbot der kun kan svare ud fra den kontekst du er blevet tilført her. 
 Hvis du ikke kan svare på spørgsmålet, men mangler mere information så spørg efter det. Hvis det slet ikke er et emne der er i konteksten her skal du svare 'Svaret er ikke i ERFA bladene, håndbogen eller Sikkerhedsstyrelsens guider.'"""
  
-
-if 'previous' not in st.session_state:
-    previous_questions_and_answers = []
-    st.session_state['previous'] = previous_questions_and_answers
 
 
 #prompt = st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
@@ -216,6 +212,8 @@ if "messages" not in st.session_state:
 for msg in st.session_state.messages:
     c.chat_message(msg["role"]).write(msg["content"])
 
+st.session_state.messages.append({ "role": "system", "content": INSTRUCTIONS })
+
 if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen'):
      
     openai.api_key = st.secrets["apikey"]
@@ -224,7 +222,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     errors = get_moderation(prompt)
     if errors:
         c.write(errors)
-    response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.messages, prompt, df, document_embeddings)
+    response, sections_tokens = get_response(prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
     c.chat_message("assistant").write(msg.content)
