@@ -243,7 +243,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     c.chat_message("assistant").write(msg.content)
 
     st.session_state.logged_prompt = collector.log_prompt(
-        config_model=str({"model": COMPLETIONS_MODEL}),
+        config_model={"model": "COMPLETIONS_MODEL"},
         prompt=prompt,
         generation=response,
     )
