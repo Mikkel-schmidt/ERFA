@@ -196,7 +196,10 @@ Du kan kun svare ud fra den kontekst du er blevet tilført igennem beskederne fr
 Svar så godt på spørgsmålet du kan, men hvis du ikke kan svare på spørgsmålet ordentligt, men mangler mere information så spørg efter det. Tror du der kunne være et andet spørgsmål så foreslå om det hander om det istedet.
 Hvis du ikke kan svare så forklar hvad du mangler information omkring. Hvis du ikke forstår spørgsmålet i konteksten så forklar det. """
  
-
+if "logged_prompt" not in st.session_state:
+    st.session_state.logged_prompt = None
+if "feedback_key" not in st.session_state:
+    st.session_state.feedback_key = 0
 
 #prompt = st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen:', )
 # if prompt:
@@ -239,6 +242,12 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     st.session_state.messages.append(msg)
     c.chat_message("assistant").write(msg.content)
 
+    st.session_state.logged_prompt = collector.log_prompt(
+        config_model={"model": COMPLETIONS_MODEL},
+        prompt=prompt,
+        generation=response,
+    )
+
     ct = str(datetime.datetime.now())
     questions = open("prompts.txt", "a")
     questions.write(ct + ': ' + prompt + " \n")
@@ -251,11 +260,13 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     conv = open("conversations.txt", "a")
     conv.write(ct + ': ' + prompt + '; ' + msg.content + " \n")
     conv.close()
-    
+
     user_feedback = collector.st_feedback(
         component="default",
-        feedback_type="thumbs",
+        feedback_type="faces",
         open_feedback_label="[Optional] Provide additional feedback",
-        model=COMPLETIONS_MODEL,
-        prompt_id=None,  # checkout collector.log_prompt() to log your user prompts
+        model=st.session_state.logged_prompt.config_model.model,
+        prompt_id=st.session_state.logged_prompt.id,
+        key=st.session_state.feedback_key,
+        align="flex-start",
     )
