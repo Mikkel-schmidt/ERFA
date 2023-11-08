@@ -221,6 +221,9 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     openai.api_key = st.secrets["apikey"]
     st.session_state.messages.append({"role": "user", "content": prompt})
     c.chat_message("human").write(prompt)
+    errors = get_moderation(prompt)
+    if errors:
+        st.write(errors)
     response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.messages, prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
