@@ -2,8 +2,11 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+from trubrics import Trubrics
 import pickle
 import tiktoken
+import datetime
+from trubrics.integrations.streamlit import FeedbackCollector
 from streamlit_extras.customize_running import center_running
 center_running()
 
@@ -19,7 +22,11 @@ if 'df' not in st.session_state:
 with open('document_embeddings.pkl', 'rb') as fp:
     document_embeddings = pickle.load(fp)
 
-
+collector = FeedbackCollector(
+    email=st.secrets.TRUBRICS_EMAIL,
+    password=st.secrets.TRUBRICS_PASSWORD,
+    project="default"
+)
 
 
 def make_clickable(val, kilde):
@@ -220,7 +227,7 @@ for msg in st.session_state.messages:
 #st.session_state.messages.append({ "role": "system", "content": INSTRUCTIONS })
 
 if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen'):
-     
+
     openai.api_key = st.secrets["apikey"]
     st.session_state.messages.append({"role": "user", "content": prompt})
     c.chat_message("user").write(prompt)
@@ -231,5 +238,24 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
     c.chat_message("assistant").write(msg.content)
-    
 
+    ct = datetime.datetime.now()
+    questions = open("prompts.txt", "a")
+    questions.write(ct + ': ' + prompt + " \n")
+    questions.close()
+
+    answers = open("responses.txt", "a")
+    answers.write(ct + ': ' + msg.content + " \n")
+    answers.close()
+
+    conv = open("conversations.txt", "a")
+    conv.write(ct + ': ' + prompt + '; ' + msg.content + " \n")
+    conv.close()
+    
+user_feedback = collector.st_feedback(
+    component="default",
+    feedback_type="thumbs",
+    open_feedback_label="[Optional] Provide additional feedback",
+    model=COMPLETIONS_MODEL,
+    prompt_id=None,  # checkout collector.log_prompt() to log your user prompts
+)
