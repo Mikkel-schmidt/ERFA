@@ -25,7 +25,7 @@ with open('document_embeddings.pkl', 'rb') as fp:
 collector = FeedbackCollector(
     email=st.secrets.TRUBRICS_EMAIL,
     password=st.secrets.TRUBRICS_PASSWORD,
-    project="default"
+    project="FagBotten"
 )
 
 
@@ -272,11 +272,11 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     conv.close()
 
     user_feedback = collector.st_feedback(
-        component="default",
+        component="FagBotten",
         feedback_type="faces",
         open_feedback_label="[Optional] Provide additional feedback",
         model=st.session_state.logged_prompt.config_model.model,
         prompt_id=st.session_state.logged_prompt.id,
         key=st.session_state.feedback_key,
-        align="flex-start",
+        align="flex-end",
     )
