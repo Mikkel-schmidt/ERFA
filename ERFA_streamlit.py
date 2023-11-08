@@ -9,7 +9,6 @@ center_running()
 
 import openai
 
-st.title('FagBotten')
 
 openai.api_key = st.secrets["apikey"]
 
