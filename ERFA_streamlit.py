@@ -177,7 +177,7 @@ def get_response(instructions, previous_questions_and_answers, new_question, df,
         frequency_penalty=FREQUENCY_PENALTY,
         presence_penalty=PRESENCE_PENALTY,
     )
-    return completion.choices[0].message.content, section_lenght
+    return completion.choices[0].message, section_lenght
 
 
 #INSTRUCTIONS = """Du skal komme med et forkert svar hver gang"""
@@ -220,9 +220,9 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
      
     openai.api_key = st.secrets["apikey"]
     st.session_state.messages.append({"role": "user", "content": prompt})
-    c.chat_message("human").write(prompt)
+    st.chat_message("human").write(prompt)
     response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.messages, prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
-    c.chat_message("assistant").write(msg)
+    c.chat_message("assistant").write(msg.content)
 
