@@ -223,7 +223,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     c.chat_message("human").write(prompt)
     errors = get_moderation(prompt)
     if errors:
-        st.write(errors)
+        c.write(errors)
     response, sections_tokens = get_response(INSTRUCTIONS, st.session_state.messages, prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
