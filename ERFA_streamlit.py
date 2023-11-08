@@ -30,6 +30,9 @@ PRESENCE_PENALTY = 0.6
 MAX_CONTEXT_QUESTIONS = 3
 
 
+def make_clickable(val, kilde):
+    return f'<a target="_blank" href="{val}#page={page_number}">{kilde}</a>'
+
 
 
 def get_moderation(question):
@@ -122,8 +125,8 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
             
     # Useful diagnostic information
     st.write(f"Vigtigste {len(chosen_sections)} kilder:")
-    #st.write("\n".join(chosen_sections))
-    st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].values)
+    #st.write("\n".join(chosen_sections))df_styled = df.head().style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])})
+    st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])}))
         
     return chosen_sections, chosen_sections_len
 
