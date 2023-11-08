@@ -15,7 +15,7 @@ import openai
 openai.api_key = st.secrets["apikey"]
 
 st.set_page_config(
-    page_title="Ex-stream-ly Cool App",
+    page_title="FagBotten",
     page_icon="🌍",)
 
 if 'df' not in st.session_state:
