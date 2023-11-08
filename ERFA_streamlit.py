@@ -228,5 +228,5 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
     c.chat_message("assistant").write(msg.content)
-    st.write([{ "role": "system", "content": INSTRUCTIONS }] + st.session_state.messages)
+    st.write([{ "role": "system", "content": INSTRUCTIONS }] + [{ "role": "system", "content": context}] + st.session_state.messages)
 
