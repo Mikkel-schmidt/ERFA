@@ -13,7 +13,7 @@ import openai
 openai.api_key = st.secrets["apikey"]
 
 if 'df' not in st.session_state:
-    df = pd.read_csv('df_enc.csv').style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])})
+    df = pd.read_csv('df_enc.csv')
     st.session_state['key'] = df
 
 with open('document_embeddings.pkl', 'rb') as fp:
