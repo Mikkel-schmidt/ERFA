@@ -240,6 +240,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     response, kilder = get_response(prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
+
     lines = []  # Create an empty list to store the strings
     for i in range(kilder.shape[0]):
         url = kilder.iloc[i]['url']
@@ -247,8 +248,7 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
         lines.append(line)  # Append the line to the list
 
     all_lines = '\n'.join(lines)  # Join all the lines into a single string
-    st.write(all_lines)
-    c.chat_message("assistant").write(msg.content + all_lines)#"\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
+    c.chat_message("assistant").write(msg.content + '\n' + all_lines)#"\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
     
 
 
