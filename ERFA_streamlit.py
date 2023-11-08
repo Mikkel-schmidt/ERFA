@@ -131,7 +131,7 @@ def construct_prompt(question: str, previous_questions, context_embeddings: dict
         st.write("[" + str(kilder.iloc[i]['Kilde']) + "](%s)" % url)
     #st.write(df[['Kilde', 'url']].iloc[chosen_sections_indexes].style.format({'url': lambda x: make_clickable(x, df.loc[df['url'] == x]['Kilde'].values[0])}))
         
-    return chosen_sections, chosen_sections_len
+    return chosen_sections, chosen_sections_len, kilder
 
 def get_response(new_question, df, document_embeddings):
     """Get a response from ChatCompletion
@@ -146,7 +146,7 @@ def get_response(new_question, df, document_embeddings):
     """
     # build the messages
     
-    prompt, section_lenght = construct_prompt(
+    prompt, section_lenght, kilder = construct_prompt(
         new_question,
         st.session_state.messages,
         document_embeddings,
@@ -176,7 +176,7 @@ def get_response(new_question, df, document_embeddings):
         frequency_penalty=FREQUENCY_PENALTY,
         presence_penalty=PRESENCE_PENALTY,
     )
-    return completion.choices[0].message, section_lenght
+    return completion.choices[0].message, kilder
 
 EMBEDDING_MODEL = "text-embedding-ada-002"
 COMPLETIONS_MODEL = "gpt-4-1106-preview"
@@ -237,10 +237,13 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     errors = get_moderation(prompt)
     if errors:
         c.write(errors)
-    response, sections_tokens = get_response(prompt, df, document_embeddings)
+    response, kilder = get_response(prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
-    c.chat_message("assistant").write(msg.content)
+    c.chat_message("assistant").write(msg.content  for i in range(kilder.shape[0]): "\n[" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
+    for i in range(kilder.shape[0]):
+        url = kilder.iloc[i]['url'] 
+        st.write("[" + str(kilder.iloc[i]['Kilde']) + "](%s)" % url)
 
     st.session_state.logged_prompt = collector.log_prompt(
         config_model={"model": COMPLETIONS_MODEL},
