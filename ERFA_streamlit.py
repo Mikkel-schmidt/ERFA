@@ -240,11 +240,11 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     response, kilder = get_response(prompt, df, document_embeddings)
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
-    c.chat_message("assistant").write(msg.content + for i in range(kilder.shape[0]): "\n[" + str(kilder.iloc[i]['Kilde']) + "](%s)" % kilder.iloc[i]['url'] )
-    
-    # for i in range(kilder.shape[0]):
-    #     url = kilder.iloc[i]['url'] 
-    #     st.write("[" + str(kilder.iloc[i]['Kilde']) + "](%s)" % url)
+    urls = []
+    for i in range(kilder.shape[0]):
+        url = kilder.iloc[i]['url'] 
+        urls = urls.append("\n [" + str(kilder.iloc[i]['Kilde']) + "](%s)" % url)
+    c.chat_message("assistant").write(msg.content + urls)
 
     st.session_state.logged_prompt = collector.log_prompt(
         config_model={"model": COMPLETIONS_MODEL},
