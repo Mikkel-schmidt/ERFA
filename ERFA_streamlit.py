@@ -159,7 +159,7 @@ def get_response(new_question, df, document_embeddings):
     #     messages.append({ "role": "assistant", "content": answer })
     # # add the new question
     # messages.append({ "role": "user", "content": new_question })
-
+    st.write([{ "role": "system", "content": INSTRUCTIONS }] + [{ "role": "system", "content": context}] + st.session_state.messages)
     completion = openai.ChatCompletion.create(
         model=COMPLETIONS_MODEL,
         messages=[{ "role": "system", "content": INSTRUCTIONS }] + [{ "role": "system", "content": context}] + st.session_state.messages,
@@ -228,5 +228,5 @@ if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyr
     msg = response#.choices[0].message
     st.session_state.messages.append(msg)
     c.chat_message("assistant").write(msg.content)
-    st.write([{ "role": "system", "content": INSTRUCTIONS }] + [{ "role": "system", "content": context}] + st.session_state.messages)
+    
 
