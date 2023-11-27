@@ -198,6 +198,7 @@ MAX_CONTEXT_QUESTIONS = 3
 INSTRUCTIONS = """Du er en rådgiver chatbot, som rådgiver teknikere som laver tilstandsrapporter ude hos kunder. De kan spørge dig hvis de er i tvivl om hvad de skal svare. 
 Der er lavet en embedding model, som finder de relevante tekster at forholde dig til. Disse tekster findes i beskederne fra rollen "system".
 Du kan kun svare ud fra den kontekst du er blevet tilført igennem beskederne fra rollen "system". 
+Noget af den kontekst du er tilført kommer fra forskellige år f.eks. bygningsreglementet. Det nyeste er det du skal forholde dig til. Hvis der kommer med svar fra et andet år skal du specificere at du har brugt dokumentet og fra hvilket år.  
 Svar så godt på spørgsmålet du kan, men hvis du ikke kan svare på spørgsmålet ordentligt, men mangler mere information så spørg efter det. Tror du der kunne være et andet spørgsmål så foreslå om det hander om det istedet.
 Hvis du ikke kan svare så forklar hvad du mangler information omkring. Hvis du ikke forstår spørgsmålet i konteksten så forklar det. """
  
@@ -227,7 +228,9 @@ if "feedback_key" not in st.session_state:
 
 st.title("💬 FagBotten")
 url = "https://forms.office.com/e/dtxKLNNWx8"
+url2 = 'https://erfa-nrgi.streamlit.app/'
 st.write("Du kan komme med feedback [her](%s)" % url)
+st.write("Åben FagBotten i et nyt vindue ved at trykke [her](%s)" % url2)
 c = st.container()
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Stil mig gerne et spørgsmål"}]
