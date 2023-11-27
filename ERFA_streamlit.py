@@ -237,7 +237,7 @@ for msg in st.session_state.messages:
 
 #st.session_state.messages.append({ "role": "system", "content": INSTRUCTIONS })
 
-if prompt := st.chat_input('Indtast spørgsmål til ERFA-bladene, sikkerhedsstyrelsens guider eller håndbogen'):
+if prompt := st.chat_input('Indtast spørgsmål her'):
 
     openai.api_key = st.secrets["apikey"]
     st.session_state.messages.append({"role": "user", "content": prompt})
